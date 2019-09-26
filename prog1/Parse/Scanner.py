@@ -93,14 +93,15 @@ class Scanner:
                 i = ord(ch) - ord('0')
                 j = self.peek()
                 # TODO: scan the number and convert it to an integer
-                if j >= '0' and j <= '9':
-                    ch =self.read()
-                    i = int(i)
+                while j >= '0' and j <= '9':
+                    i = i * 10 + ord(ch) - ord(0)
+                    ch = self.read()
+                    j = self.peek()
                 # make sure that the character following the integer
                 # is not removed from the input stream
                 return IntToken(i)
 
-            # Identifiers 
+            # Identifiers
             elif ch == '!' or (ch >= '$' and ch <= '&') or ch == '*' or ch == '/' or ch == ':' or (ch >= '>' and ch <= '?') or (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or  ch == '_' or ch == '~' :
                 # or ch is some other valid first character
                 # for an identifier
@@ -115,7 +116,6 @@ class Scanner:
                     buf[i] = ch
                     i+=1
                     ch = self.read()
-
                 # make sure that the character following the identifier
                 # is not removed from the input stream
                 return IdentToken("".join(self.buf))
