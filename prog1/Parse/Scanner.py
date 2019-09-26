@@ -38,6 +38,12 @@ class Scanner:
             ch = self.read()
 
             # TODO: Skip white space and comments
+            if ch == chr(31) or chr(10):
+                return self.getNextToken()
+            elif ch == ';':
+                while ch != chr(10):
+                    ch = self.read()
+                return self.getNextToken()
 
             # Return None on EOF
             if ch == "":
@@ -73,15 +79,23 @@ class Scanner:
             # String constants
             elif ch == '"':
                 self.buf = []
+                i = int(0)
                 # TODO: scan a string into the buffer variable buf
-    
-                return StrToken("".join(self.buf))
+                ch = self.read()
+                while ch != '"':
+                    buff[i] = ch
+                    i+=1
+                    ch = self.read()
+                    return StrToken("".join(self.buf))
 
             # Integer constants
             elif self.isDigit(ch):
                 i = ord(ch) - ord('0')
+                j = self.peek()
                 # TODO: scan the number and convert it to an integer
-
+                if j >= '0' and j <= '9':
+                    ch =self.read()
+                    i = int(i)
                 # make sure that the character following the integer
                 # is not removed from the input stream
                 return IntToken(i)
@@ -92,7 +106,10 @@ class Scanner:
                 # for an identifier
                 self.buf = []
                 # TODO: scan an identifier into the buffer variable buf
-
+                while ch >= 'A' and ch <= 'Z':
+                    buf[i] = ch
+                    i+=1
+                    ch = self.read()
 
                 # make sure that the character following the identifier
                 # is not removed from the input stream
