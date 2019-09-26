@@ -17,7 +17,7 @@ class Scanner:
             ch = self.ch_buf
             self.ch_buf = None
             return ch
-    
+
     def peek(self):
         if self.ch_buf == None:
             self.ch_buf = self.In.read(1)
@@ -38,7 +38,7 @@ class Scanner:
             ch = self.read()
 
             # TODO: Skip white space and comments
-            if ch == chr(31) or chr(10):
+            if ch == chr(32) or chr(10):
                 return self.getNextToken()
             elif ch == ';':
                 while ch != chr(10):
@@ -48,7 +48,7 @@ class Scanner:
             # Return None on EOF
             if ch == "":
                 return None
-    
+
             # Special characters
             elif ch == '\'':
                 return Token(TokenType.QUOTE)
@@ -79,8 +79,8 @@ class Scanner:
             # String constants
             elif ch == '"':
                 self.buf = []
-                i = int(0)
                 # TODO: scan a string into the buffer variable buf
+                i = int(0)
                 ch = self.read()
                 while ch != '"':
                     buff[i] = ch
@@ -99,14 +99,19 @@ class Scanner:
                 # make sure that the character following the integer
                 # is not removed from the input stream
                 return IntToken(i)
-    
-            # Identifiers
-            elif ch >= 'A' and ch <= 'Z':
-                # or ch is some other vaid first character
+
+            # Identifiers 
+            elif ch == '!' or (ch >= '$' and ch <= '&') or ch == '*' or ch == '/' or ch == ':' or (ch >= '>' and ch <= '?') or (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or  ch == '_' or ch == '~' :
+                # or ch is some other valid first character
                 # for an identifier
                 self.buf = []
-                # TODO: scan an identifier into the buffer variable buf
-                while ch >= 'A' and ch <= 'Z':
+                # TODO: scan an identifier into the buffer variable buf\
+                i = int(0)
+                buf[i] = ch
+                i+=1
+                ch =self.read()
+                # for subsequent identifier
+                while ch == '!' or (ch >= '$' and ch <= '&') or (ch >= '*' and ch <= '+') or (ch >= '-' and ch <= ':') or (ch >= '<' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or (ch >= '_' and ch <= '^') or ch == '~' :
                     buf[i] = ch
                     i+=1
                     ch = self.read()
