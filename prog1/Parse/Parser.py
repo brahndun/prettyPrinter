@@ -42,13 +42,16 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-        return None
-
+        return parseExp(s.getNextToken())
     def parseRest(self):
         # TODO: write code for parsing a rest
         return None
 
     # TODO: Add any additional methods you might need
+    def parseExp(self, t):
+        self.Token = t
+        #if (t.getType() == ):
+        #elif (t.getType() ==):
 
     def __error(self, msg):
         sys.stderr.write("Parse error: " + msg + "\n")
