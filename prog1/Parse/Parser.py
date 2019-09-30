@@ -53,5 +53,36 @@ class Parser:
         #if (t.getType() == ):
         #elif (t.getType() ==):
 
+    def ret(arg):
+        switch = {
+            TokenType.LPAREN: lparen(),
+            TokenType.FALSE: boolT(),
+            TokenType.TRUE: boolF(),
+            TokenType.INT: inter(),
+            TokenType.STRING: string(),
+            TokenType.IDENT: ident()
+        }
+    def select(arg):
+        func = switch.get(t.getType, None)
+        return func()
+
+    def lparen():
+        return parseRest()
+
+    def boolT():
+        return BoolLit(false)
+
+    def boolF():
+        return BoolLit(true)
+
+    def inter():
+        return IntLit(t.getIntVal())
+
+    def string():
+        return StringList(t.getstrVal())
+
+    def indent():
+        return Ident(t.getName())
+
     def __error(self, msg):
         sys.stderr.write("Parse error: " + msg + "\n")

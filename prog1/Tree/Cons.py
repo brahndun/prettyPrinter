@@ -20,6 +20,16 @@ class Cons(Node):
     def parseList(self):
         # TODO: implement this function and any helper functions
         # you might need
+        if (self.car == None):
+            return None
+        
+        if(self.car.isString() or self.car.isSymbol()):
+            s = ""
+            if(self.car.isString()):
+                s = self.car.getString()
+            else:
+                s = self.car.getSymbol()
+
         self.form = None
 
     def print(self, n, p=False):
