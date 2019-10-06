@@ -35,6 +35,7 @@
 
 import sys
 from Tokens import TokenType
+from Tree import*
 
 class Parser:
     def __init__(self, s):
@@ -42,47 +43,39 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-        return parseExp(s.getNextToken())
+        return parseExpT(self.scanner.getNextToken())
     def parseRest(self):
         # TODO: write code for parsing a rest
-        return None
-
+        t = self.scanner.getNextToken()
+        if t == None:
+            return None
+        if t.getType() == TokenType.RPAREN:
+            return Nil()
+        else:
+            return Cons(parseExp(), parseRest())
+            
     # TODO: Add any additional methods you might need
-    def parseExp(self, t):
-        self.Token = t
+    def parseExpT(self, t):
+        t = self.scanner.getNextToken()
         #if (t.getType() == ):
         #elif (t.getType() ==):
+        if t.getType() == TokenType.LPAREN:
+            return ParseRest()
+        elif t.getType() == TokenType.FALSE:
+            return BoolLit(False)
+        elif t.getType() == TokenType.TRUE:
+            return BoolLit(True)
+        elif t.getType() == TokenType.IDENT:
+            return Ident(t.getSymbol())
+        elif t.getType() == TokenType.INT:
+            return IntLit(t.getNumber())
+        elif t.getType() == TokenType.STR:
+            return StrLit(t.getString())
+        elif t.getType() == TokenType.QUOTE:
+            return Cons(Ident("\'"), parseExp())
+        elif t.getType() == TokenType.DOT:
+            return Cons(StrLit("."), parseExp())
 
-    def ret(arg):
-        switch = {
-            TokenType.LPAREN: lparen(),
-            TokenType.FALSE: boolT(),
-            TokenType.TRUE: boolF(),
-            TokenType.INT: inter(),
-            TokenType.STRING: string(),
-            TokenType.IDENT: ident()
-        }
-    def select(arg):
-        func = switch.get(t.getType, None)
-        return func()
-
-    def lparen():
-        return parseRest()
-
-    def boolT():
-        return BoolLit(false)
-
-    def boolF():
-        return BoolLit(true)
-
-    def inter():
-        return IntLit(t.getIntVal())
-
-    def string():
-        return StringList(t.getstrVal())
-
-    def indent():
-        return Ident(t.getName())
-
+        return Nil()
     def __error(self, msg):
         sys.stderr.write("Parse error: " + msg + "\n")
