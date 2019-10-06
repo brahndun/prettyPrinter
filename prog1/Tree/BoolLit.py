@@ -40,6 +40,10 @@ class BoolLit(Node):
         else:
             sys.stdout.write("#f\n")
 
+    def isBool(self):
+        return True
+    def getBool(self):
+        return self.getInstance
 if __name__ == "__main__":
     b = BoolLit.getInstance(True)
     b.print(0)

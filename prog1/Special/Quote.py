@@ -9,4 +9,4 @@ class Quote(Special):
 
     def print(self, t, n, p):
         # TODO: Implement this function.
-        pass
+        prtint('\'')

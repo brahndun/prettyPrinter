@@ -9,4 +9,6 @@ class Regular(Special):
 
     def print(self, t, n, p):
         # TODO: Implement this function.
-        pass
+        if (t == None):
+            pass
+        print(t)

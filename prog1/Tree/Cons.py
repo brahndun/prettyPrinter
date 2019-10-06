@@ -25,16 +25,50 @@ class Cons(Node):
         
         if(self.car.isString() or self.car.isSymbol()):
             s = ""
-            if(self.car.isString()):
+            if self.car.isString():
                 s = self.car.getString()
             else:
                 s = self.car.getSymbol()
+            if s == "begin":
+                return Begin()
+            elif s == "cond":
+                return Cont()
+            elif s == "define":
+                return Define()
+            elif s == "if":
+                return If()
+            elif s == "lambda":
+                return Lambda()
+            elif s == "let":
+                return Let()
+            elif s == "set!":
+                return Set()
+            elif s == "\ '":
+                return Quote()
+            else:
+                return Regular()
+        else:
+            self.form = Regular()
 
+            
         self.form = None
 
     def print(self, n, p=False):
         self.form.print(self, n, p)
 
+    def getCar(self):
+        return self.getCar
+
+    def getCdr(self):
+        return self.getCdr    
+
+    def setCar(self, a):
+        self.setCar(a)
+        parseList()
+
+    def setCdr(self, d):
+        self.setCdr(d)
+    
 if __name__ == "__main__":
     c = Cons(Ident("Hello"), Ident("World"))
     c.print(0)

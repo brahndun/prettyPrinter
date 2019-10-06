@@ -12,7 +12,10 @@ class IntLit(Node):
         for _ in range(n):
             sys.stdout.write(' ')
         sys.stdout.write(str(self.intVal) + '\n')
-
+    def isNumber(self):
+        return True
+    def getNumber(self):
+        return self.intVal
 if __name__ == "__main__":
     id = IntLit(42)
     id.print(0)

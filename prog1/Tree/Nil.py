@@ -26,7 +26,10 @@ class Nil(Node):
             sys.stdout.write(")\n")
         else:
             sys.stdout.write("()\n")
-
+    def isNull(self):
+        return True
+    def getStatus(self):
+        return self.getInstance
 if __name__ == "__main__":
     n = Nil.getInstance()
     n.print(0)
