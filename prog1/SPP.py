@@ -3,7 +3,6 @@
 import sys
 from Parse import *
 from Tokens import TokenType
-from Tree import TreeBuilder
 
 if __name__ == "__main__":
     # Create scanner that reads from standard input

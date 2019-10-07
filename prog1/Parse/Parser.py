@@ -34,8 +34,8 @@
 # or an RPAREN) and attempts to continue parsing with the next token.
 
 import sys
-from Tokens import TokenType
-from Tree import*
+from prog1.Tokens import TokenType
+from prog1.Tree import*
 
 class Parser:
     def __init__(self, s):
@@ -43,7 +43,8 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-        return parseExpT(self.scanner.getNextToken())
+         return self.parseExpR(self.scanner.getNextToken())
+
     def parseRest(self):
         # TODO: write code for parsing a rest
         t = self.scanner.getNextToken()
@@ -52,15 +53,15 @@ class Parser:
         if t.getType() == TokenType.RPAREN:
             return Nil()
         else:
-            return Cons(parseExp(), parseRest())
-            
+            return Cons(self.parseExp(), self.parseRest())
+
     # TODO: Add any additional methods you might need
-    def parseExpT(self, t):
+    def parseExpR(self, t):
         t = self.scanner.getNextToken()
         #if (t.getType() == ):
         #elif (t.getType() ==):
         if t.getType() == TokenType.LPAREN:
-            return ParseRest()
+            return self.parseRest()
         elif t.getType() == TokenType.FALSE:
             return BoolLit(False)
         elif t.getType() == TokenType.TRUE:
@@ -72,9 +73,9 @@ class Parser:
         elif t.getType() == TokenType.STR:
             return StrLit(t.getString())
         elif t.getType() == TokenType.QUOTE:
-            return Cons(Ident("\'"), parseExp())
+            return Cons(Ident("\'"), self.parseExp())
         elif t.getType() == TokenType.DOT:
-            return Cons(StrLit("."), parseExp())
+            return Cons(StrLit("."), self.parseExp())
 
         return Nil()
     def __error(self, msg):

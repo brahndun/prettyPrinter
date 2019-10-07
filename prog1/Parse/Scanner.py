@@ -83,7 +83,7 @@ class Scanner:
                 i = int(0)
                 ch = self.read()
                 while ch != '"':
-                    buff[i] = ch
+                    self.buf[i] = ch
                     i+=1
                     ch = self.read()
                     return StrToken("".join(self.buf))
@@ -108,12 +108,12 @@ class Scanner:
                 self.buf = []
                 # TODO: scan an identifier into the buffer variable buf\
                 i = int(0)
-                buf[i] = ch
+                self.buf[i] = ch
                 i+=1
                 ch =self.read()
                 # for subsequent identifier
                 while ch == '!' or (ch >= '$' and ch <= '&') or (ch >= '*' and ch <= '+') or (ch >= '-' and ch <= ':') or (ch >= '<' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or (ch >= '_' and ch <= '^') or ch == '~' :
-                    buf[i] = ch
+                    self.buf[i] = ch
                     i+=1
                     ch = self.read()
                 # make sure that the character following the identifier
