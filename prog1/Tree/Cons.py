@@ -22,7 +22,7 @@ class Cons(Node):
         # you might need
         if (self.car == None):
             return None
-        
+
         if(self.car.isString() or self.car.isSymbol()):
             s = ""
             if self.car.isString():
@@ -50,7 +50,7 @@ class Cons(Node):
         else:
             self.form = Regular()
 
-            
+
         self.form = None
 
     def print(self, n, p=False):
@@ -60,15 +60,15 @@ class Cons(Node):
         return self.getCar
 
     def getCdr(self):
-        return self.getCdr    
+        return self.getCdr
 
     def setCar(self, a):
         self.setCar(a)
-        parseList()
+        self.parseList()
 
     def setCdr(self, d):
         self.setCdr(d)
-    
+
 if __name__ == "__main__":
     c = Cons(Ident("Hello"), Ident("World"))
     c.print(0)

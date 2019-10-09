@@ -26,6 +26,7 @@ class Nil(Node):
             sys.stdout.write(")\n")
         else:
             sys.stdout.write("()\n")
+
     def isNull(self):
         return True
     def getStatus(self):

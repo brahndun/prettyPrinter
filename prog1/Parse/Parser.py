@@ -34,8 +34,8 @@
 # or an RPAREN) and attempts to continue parsing with the next token.
 
 import sys
-from prog1.Tokens import TokenType
-from prog1.Tree import*
+from Tokens import TokenType
+from Tree import *
 
 class Parser:
     def __init__(self, s):

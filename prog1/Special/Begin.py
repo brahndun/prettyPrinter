@@ -1,6 +1,6 @@
 # Begin -- Parse tree node strategy for printing the special form begin
 
-from prog1.Special import Special
+from Special import Special
 
 class Begin(Special):
     # TODO: Add fields and modify the constructor as needed.
