@@ -20,7 +20,7 @@ class Nil(Node):
 
     def print(self, n, p=False):
         # There got to be a more efficient way to print n spaces.
-        for _ in range(n):
+        for _ in range(n - 4):
             sys.stdout.write(' ')
         if p:
             sys.stdout.write(")\n")
@@ -29,7 +29,7 @@ class Nil(Node):
 
     def isNull(self):
         return True
-    def getStatus(self):
+    def getNil(self):
         return self.getInstance
 if __name__ == "__main__":
     n = Nil.getInstance()

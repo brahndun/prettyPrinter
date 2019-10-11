@@ -43,20 +43,14 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-         return self.parseExpR(self.scanner.getNextToken())
+         return self._parseExp(self.scanner.getNextToken())
 
     def parseRest(self):
         # TODO: write code for parsing a rest
-        t = self.scanner.getNextToken()
-        if t == None:
-            return None
-        if t.getType() == TokenType.RPAREN:
-            return Nil()
-        else:
-            return Cons(self.parseExp(), self.parseRest())
+        return self._parseRest(self.scanner.getNextToken())
 
     # TODO: Add any additional methods you might need
-    def parseExpR(self, t):
+    def _parseExp(self, t):
         t = self.scanner.getNextToken()
         #if (t.getType() == ):
         #elif (t.getType() ==):
@@ -78,5 +72,39 @@ class Parser:
             return Cons(StrLit("."), self.parseExp())
 
         return Nil()
+
+    def parseRest(self, t):
+        if t == None:
+            return
+        elif t.getType() == TokenType.RPAREN:
+            return Nil()
+        else:
+            t2 == self._parseExp(t)
+            if t2 == None:
+                return
+            t = self.scanner.getNextToken()
+            if t == None:
+                return
+            if t.getType() == TokenType.DOT:
+                d1 = self.parseExp()
+                if d1 == None:
+                    return
+                t = self.scanner.getNextToken()
+                if t.getType() != TokenType.RPAREN:
+                    d1.print(2, False)
+                while t != None:
+                    if t.getType != TokenType.RPAREN:
+                        temp = self._parseExp(t)
+                        if temp == None:
+                            return
+                        t.self.scanner.getNextToken()
+                if t == None:
+                    return
+            else:
+                d1 = self.parseRest(t)
+            if d == None:
+                return
+            return Cons(t2, d1)
+
     def __error(self, msg):
         sys.stderr.write("Parse error: " + msg + "\n")

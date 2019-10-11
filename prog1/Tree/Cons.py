@@ -2,7 +2,7 @@
 
 from Tree import Node
 from Tree import Ident
-
+from Special import *
 class Cons(Node):
     def __init__(self, a, d):
         self.car = a
@@ -22,7 +22,6 @@ class Cons(Node):
         # you might need
         if (self.car == None):
             return None
-
         if(self.car.isString() or self.car.isSymbol()):
             s = ""
             if self.car.isString():
@@ -43,15 +42,12 @@ class Cons(Node):
                 return Let()
             elif s == "set!":
                 return Set()
-            elif s == "\ '":
+            elif s == "quote":
                 return Quote()
             else:
                 return Regular()
         else:
             self.form = Regular()
-
-
-        self.form = None
 
     def print(self, n, p=False):
         self.form.print(self, n, p)

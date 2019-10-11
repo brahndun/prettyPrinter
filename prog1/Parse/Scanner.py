@@ -80,13 +80,11 @@ class Scanner:
             elif ch == '"':
                 self.buf = []
                 # TODO: scan a string into the buffer variable buf
-                i = int(0)
                 ch = self.read()
                 while ch != '"':
-                    self.buf[i] = ch
-                    i+=1
+                    self.buf.append(ch)
                     ch = self.read()
-                    return StrToken("".join(self.buf))
+                    return StrToken(''.join(self.buf))
 
             # Integer constants
             elif self.isDigit(ch):
@@ -94,8 +92,8 @@ class Scanner:
                 j = self.peek()
                 # TODO: scan the number and convert it to an integer
                 while j >= '0' and j <= '9':
-                    i = i * 10 + ord(ch) - ord(0)
                     ch = self.read()
+                    i = i * 10 + ord(ch) - ord(0)
                     j = self.peek()
                 # make sure that the character following the integer
                 # is not removed from the input stream
