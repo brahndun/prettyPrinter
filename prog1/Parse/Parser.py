@@ -73,25 +73,25 @@ class Parser:
 
         return Nil()
 
-    def parseRest(self, t):
+    def _parseRest(self, t):
         if t == None:
             return
         elif t.getType() == TokenType.RPAREN:
             return Nil()
         else:
-            t2 == self._parseExp(t)
-            if t2 == None:
+            t1 = self._parseExp(t)
+            if t1 == None:
                 return
             t = self.scanner.getNextToken()
             if t == None:
                 return
             if t.getType() == TokenType.DOT:
-                d1 = self.parseExp()
-                if d1 == None:
+                t2 = self.parseExp()
+                if t2 == None:
                     return
                 t = self.scanner.getNextToken()
                 if t.getType() != TokenType.RPAREN:
-                    d1.print(2, False)
+                    t2.print(2, False)
                 while t != None:
                     if t.getType != TokenType.RPAREN:
                         temp = self._parseExp(t)
@@ -101,10 +101,10 @@ class Parser:
                 if t == None:
                     return
             else:
-                d1 = self.parseRest(t)
-            if d == None:
+                temp = self._parseRest(t)
+            if temp == None:
                 return
-            return Cons(t2, d1)
+            return Cons(t1, t2)
 
     def __error(self, msg):
         sys.stderr.write("Parse error: " + msg + "\n")
