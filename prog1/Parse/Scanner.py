@@ -128,7 +128,7 @@ class Scanner:
 
             # Identifiers
             else:
-                if self.isInitial(ch) or ch =='+' or ch == '-':
+                if ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z' or ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~' or ch =='+' or ch == '-':
                     self.buf = []
                     if ch >= 'A':
                         if ch <= 'Z':
@@ -138,7 +138,7 @@ class Scanner:
                         return IdentToken(''.join(self.buf))
                     ch.self.peek()
                     while ch != '':
-                        ch = self.isRest(ch) and self.read()
+                        ch = ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z' or ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~' or ch =='+' or ch == '-' or ch >= '0' and ch <= '9' or ch == '+' or ch == '-' or ch == '.' or ch == '@' and self.read()
                         if ch >= 'A':
                             if ch <= 'Z':
                                 ch = ch.lower()
