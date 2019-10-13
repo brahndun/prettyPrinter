@@ -28,21 +28,21 @@ class Cons(Node):
         else:
             s = self.car.getSymbol()
             if s == "begin":
-                return Begin()
+                self.form = Begin()
             elif s == 'cond':
-                return Cond()
+                self.form = Cond()
             elif s == "define":
-                return Define()
+                self.form = Define()
             elif s == "if":
-                return If()
+                self.form = If()
             elif s == "lambda":
-                return Lambda()
+                self.form = Lambda()
             elif s == "let":
-                return Let()
+                self.form = Let()
             elif s == "set!":
-                return Set()
+                self.form = Set()
             elif s == "quote":
-                return Quote()
+                self.form = Quote()
             else:
                 self.form = Regular()
 
