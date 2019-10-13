@@ -34,7 +34,7 @@ class Scanner:
         return ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z'
 
     @staticmethod
-    def isPorM(ch)
+    def isPorM(ch):
         return ch == '+' or ch == '-'
     @staticmethod
     def isSymbol(ch):
@@ -43,14 +43,12 @@ class Scanner:
     @staticmethod
     def isResSymbol(ch):
         return ch == '+' or ch == '-' or ch == '.' or ch == '@'
-
-    @staticmethod
-    def isInitial(cls, ch):
-        return cls.isLetter(ch) or cls.isSymbol(ch)
-
-    @staticmethod
-    def isRest(cls, ch):
-        return cls.isInitial(ch) or cls.isDigit(ch) or cls.isResSymbol(ch)
+  
+    def isInitial(self, ch):
+        return self.isLetter(ch) or self.isSymbol(ch)
+   
+    def isRest(self, ch):
+        return self.isInitial(ch) or self.isDigit(ch) or self.isResSymbol(ch)
     
     def getNextToken(self):
         try:
@@ -147,7 +145,7 @@ class Scanner:
                         return IdentToken(''.join(self.buf))
                     ch.self.peek()
                     while ch != '':
-                            ch = self.isRest(ch) and self.read()                        if ch >= 'A':
+                            ch = self.isRest(ch) and self.read()
                             if ch <= 'Z':
                                 ch = ch.lower()
                             self.buf.append(ch)
