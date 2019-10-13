@@ -141,7 +141,7 @@ class Scanner:
                         if ch <= 'Z':
                             ch = ch.lower()
                     self.buf.append(ch)
-                    if ch =='+' or ch == '-':
+                    if self.isPorM(ch):
                         return IdentToken(''.join(self.buf))
                     ch.self.peek()
                     while ch != '':
