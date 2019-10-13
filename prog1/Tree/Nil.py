@@ -18,14 +18,22 @@ class Nil(Node):
         else:
             Nil.__instance = self
 
+    def indent(self, n):
+        for _ in range(n):
+            sys.stdout.write(' ')
+
+    def endspace(self, n):
+        if n >= 0:
+            sys.stdout.write('\n')
+
     def print(self, n, p=False):
         # There got to be a more efficient way to print n spaces.
-        for _ in range(n - 4):
-            sys.stdout.write(' ')
+        self.indent(n)
         if p:
-            sys.stdout.write(")\n")
+            sys.stdout.write(')')
         else:
-            sys.stdout.write("()\n")
+            sys.stdout.write('()')
+        self.endspace(n)
 
     def isNull(self):
         return True

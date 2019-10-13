@@ -7,11 +7,19 @@ class StrLit(Node):
     def __init__(self, s):
         self.strVal = s
 
-    def print(self, n, p=False):
-        # There got to be a more efficient way to print n spaces.
+    def indent(self, n):
         for _ in range(n):
             sys.stdout.write(' ')
-        sys.stdout.write("\"" + self.strVal + "\"\n")
+
+    def endspace(self, n):
+        if n >= 0:
+            sys.stdout.write('\n')
+
+    def print(self, n, p=False):
+        # There got to be a more efficient way to print n spaces.
+        self.indent(n)
+        sys.stdout.write('"' + self.strVal + '"')
+        self.endspace(n)
 
     def isString(self):
         return True

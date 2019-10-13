@@ -7,11 +7,19 @@ class IntLit(Node):
     def __init__(self, i):
         self.intVal = i
 
-    def print(self, n, p=False):
-        # There got to be a more efficient way to print n spaces.
+    def indent(self, n):
         for _ in range(n):
             sys.stdout.write(' ')
-        sys.stdout.write(str(self.intVal) + '\n')
+
+    def endspace(self, n):
+        if n >= 0:
+            sys.stdout.write('\n')
+
+    def print(self, n, p=False):
+        # There got to be a more efficient way to print n spaces.
+        self.indent(n)
+        sys.stdout.write(str(self.intVal))
+        self.endspace(n)
 
     def isNumber(self):
         return True

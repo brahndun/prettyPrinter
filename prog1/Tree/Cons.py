@@ -3,6 +3,7 @@
 from Tree import Node
 from Tree import Ident
 from Special import *
+
 class Cons(Node):
     def __init__(self, a, d):
         self.car = a
@@ -26,21 +27,21 @@ class Cons(Node):
             self.form = Regular()
         else:
             s = self.car.getSymbol()
-            if self.form == "begin":
+            if s == "begin":
                 return Begin()
-            elif self.form == 'cond':
+            elif s == 'cond':
                 return Cond()
-            elif self.form == "define":
+            elif s == "define":
                 return Define()
-            elif self.form == "if":
+            elif s == "if":
                 return If()
-            elif self.form == "lambda":
+            elif s == "lambda":
                 return Lambda()
-            elif self.form == "let":
+            elif s == "let":
                 return Let()
-            elif self.form == "set!":
+            elif s == "set!":
                 return Set()
-            elif self.form == "quote":
+            elif s == "quote":
                 return Quote()
             else:
                 self.form = Regular()
@@ -49,13 +50,13 @@ class Cons(Node):
         self.form.print(self, n, p)
 
     def getCar(self):
-        return self.getCar
+        return self.car
 
     def getCdr(self):
-        return self.getCdr
+        return self.cdr
 
     def setCar(self, a):
-        self.setCar(a)
+        self.car = a
         self.parseList()
 
     def setCdr(self, d):
