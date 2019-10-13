@@ -5,7 +5,5 @@ from Tree.Ident import Ident
 from Tree.IntLit import IntLit
 from Tree.Nil import Nil
 from Tree.StrLit import StrLit
-from Tree.TreeBuilder import TreeBuilder
 
-__all__ = ["Node", "BoolLit", "Cons", "Ident", "IntLit", "Nil", "StrLit",
-           "TreeBuilder"]
+__all__ = ["Node", "BoolLit", "Cons", "Ident", "IntLit", "Nil", "StrLit"]
