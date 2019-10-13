@@ -22,32 +22,28 @@ class Cons(Node):
         # you might need
         if (self.car == None):
             return None
-        if(self.car.isString() or self.car.isSymbol()):
-            s = ""
-            if self.car.isString():
-                s = self.car.getString()
-            else:
-                s = self.car.getSymbol()
-            if s == "begin":
+        if not self.car.isSymbol():
+            self.form = Regular()
+        else:
+            s = self.car.getSymbol()
+            if self.form == "begin":
                 return Begin()
-            elif s == "cond":
-                return Cont()
-            elif s == "define":
+            elif self.form == 'cond':
+                return Cond()
+            elif self.form == "define":
                 return Define()
-            elif s == "if":
+            elif self.form == "if":
                 return If()
-            elif s == "lambda":
+            elif self.form == "lambda":
                 return Lambda()
-            elif s == "let":
+            elif self.form == "let":
                 return Let()
-            elif s == "set!":
+            elif self.form == "set!":
                 return Set()
-            elif s == "quote":
+            elif self.form == "quote":
                 return Quote()
             else:
-                return Regular()
-        else:
-            self.form = Regular()
+                self.form = Regular()
 
     def print(self, n, p=False):
         self.form.print(self, n, p)
@@ -63,7 +59,10 @@ class Cons(Node):
         self.parseList()
 
     def setCdr(self, d):
-        self.setCdr(d)
+        self.cdr = d
+    
+    def isPair(self):
+        return True
 
 if __name__ == "__main__":
     c = Cons(Ident("Hello"), Ident("World"))

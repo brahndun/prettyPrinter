@@ -67,17 +67,17 @@ class Parser:
         elif t.getType() == TokenType.STR:
             return StrLit(t.getString())
         elif t.getType() == TokenType.QUOTE:
-            return Cons(Ident("\'"), self.parseExp())
+            return Cons(Ident("\'"),Cons(self.parseExp(),Nil()))
         elif t.getType() == TokenType.DOT:
-            return Cons(StrLit("."), self.parseExp())
-
-        return Nil()
+            return self.parseExp()
+        else:
+            return self.parseExp()
 
     def _parseRest(self, t):
         if t == None:
             return
         elif t.getType() == TokenType.RPAREN:
-            return Nil()
+            return Nil.getInstance()
         else:
             t1 = self._parseExp(t)
             if t1 == None:
@@ -90,6 +90,8 @@ class Parser:
                 if t2 == None:
                     return
                 t = self.scanner.getNextToken()
+                if t == None:
+                    return
                 if t.getType() != TokenType.RPAREN:
                     t2.print(2, False)
                 while t != None:

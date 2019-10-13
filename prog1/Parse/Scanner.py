@@ -38,7 +38,7 @@ class Scanner:
             ch = self.read()
 
             # TODO: Skip white space and comments
-            if ch == chr(32) or chr(10):
+            if ch == ' ' or chr(10):
                 return self.getNextToken()
             elif ch == ';':
                 while ch != chr(10):
@@ -84,7 +84,8 @@ class Scanner:
                 while ch != '"':
                     self.buf.append(ch)
                     ch = self.read()
-                    return StrToken(''.join(self.buf))
+                
+                return StrToken(''.join(self.buf))
 
             # Integer constants
             elif self.isDigit(ch):
