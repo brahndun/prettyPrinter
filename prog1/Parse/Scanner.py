@@ -29,6 +29,26 @@ class Scanner:
     def isDigit(ch):
         return ch >= '0' and ch <= '9'
 
+    @staticmethod
+    def isLetter(ch):
+        return ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z'
+
+    @staticmethod
+    def isSymbol(ch):
+        return ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~'  
+    
+    @staticmethod
+    def isResSymbol(ch):
+        return ch == '+' or ch == '-' or ch == '.' or ch == '@'
+
+    @staticmethod
+    def isInitial(cls, ch):
+        return cls.isLetter(ch) or cls.isSymbol(ch)
+
+    @staticmethod
+    def isRest(cls, ch):
+        return cls.isInitial(ch) or cls.isDigit(ch) or cls.isResSymbol(ch)
+    
     def getNextToken(self):
         try:
             # It would be more efficient if we'd maintain our own
@@ -37,18 +57,21 @@ class Scanner:
             # input stream is easier.
             ch = self.read()
 
-            # TODO: Skip white space and comments
-            if ch == ' ' or chr(10):
-                return self.getNextToken()
-            elif ch == ';':
-                while ch != chr(10):
-                    ch = self.read()
-                return self.getNextToken()
+            # TODO: Skip white space and comments           
+            while ch !='':
+                if ch == ' ' or ch == '\t' or ch == '\n' or ch == ';' or ch == '\x0c' or ch == '\r':
+                    if ch == ';':
+                        ch = self.read()
+                        while ch != '':
+                            if ch != '\n':
+                                ch = ch != '\r' and self.read()
+
+                    ch = ch != '' and self.read()
+
 
             # Return None on EOF
             if ch == "":
-                return None
-
+                return 
             # Special characters
             elif ch == '\'':
                 return Token(TokenType.QUOTE)
@@ -61,7 +84,7 @@ class Scanner:
                 return Token(TokenType.DOT)
 
             # Boolean constants
-            elif ch == '#':
+            if ch == '#':
                 ch = self.read()
 
                 if ch == 't':
@@ -77,22 +100,25 @@ class Scanner:
                     return self.getNextToken()
 
             # String constants
-            elif ch == '"':
+            if ch == '"':
                 self.buf = []
                 # TODO: scan a string into the buffer variable buf
                 ch = self.read()
-                while ch != '"':
-                    self.buf.append(ch)
-                    ch = self.read()
+                while ch != '':
+                    if ch != '"':
+                        self.buf.append(ch)
+                        ch = self.read()
                 
+                if ch == '':
+                    return
                 return StrToken(''.join(self.buf))
 
             # Integer constants
-            elif self.isDigit(ch):
+            if self.isDigit(ch):
                 i = ord(ch) - ord('0')
                 j = self.peek()
                 # TODO: scan the number and convert it to an integer
-                while j >= '0' and j <= '9':
+                while self.isDigit(j):
                     ch = self.read()
                     i = i * 10 + ord(ch) - ord(0)
                     j = self.peek()
@@ -101,28 +127,27 @@ class Scanner:
                 return IntToken(i)
 
             # Identifiers
-            elif ch == '!' or (ch >= '$' and ch <= '&') or ch == '*' or ch == '/' or ch == ':' or (ch >= '>' and ch <= '?') or (ch >= 'A' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or  ch == '_' or ch == '~' :
-                # or ch is some other valid first character
-                # for an identifier
-                self.buf = []
-                # TODO: scan an identifier into the buffer variable buf\
-                i = int(0)
-                self.buf[i] = ch
-                i+=1
-                ch =self.read()
-                # for subsequent identifier
-                while ch == '!' or (ch >= '$' and ch <= '&') or (ch >= '*' and ch <= '+') or (ch >= '-' and ch <= ':') or (ch >= '<' and ch <= 'Z') or (ch >= 'a' and ch <= 'z') or (ch >= '_' and ch <= '^') or ch == '~' :
-                    self.buf[i] = ch
-                    i+=1
-                    ch = self.read()
-                # make sure that the character following the identifier
-                # is not removed from the input stream
-                return IdentToken("".join(self.buf))
-
-            # Illegal character
             else:
+                if self.isInitial(ch) or ch =='+' or ch == '-':
+                    self.buf = []
+                    if ch >= 'A':
+                        if ch <= 'Z':
+                            ch = ch.lower()
+                    self.buf.append(ch)
+                    if ch =='+' or ch == '-':
+                        return IdentToken(''.join(self.buf))
+                    ch.self.peek()
+                    while ch != '':
+                        ch = self.isRest(ch) and self.read()
+                        if ch >= 'A':
+                            if ch <= 'Z':
+                                ch = ch.lower()
+                            self.buf.append(ch)
+                            ch = self.peek()
+
+                    return IdentToken(''.join(self.buf))
                 sys.stderr.write("Illegal input character '" + ch + "'\n")
-                return self.getNextToken()
+            return self.getNextToken()
 
         except IOError:
             sys.stderr.write("IOError: error reading input file\n")
