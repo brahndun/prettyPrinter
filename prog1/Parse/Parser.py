@@ -43,11 +43,13 @@ class Parser:
 
     def parseExp(self):
         # TODO: write code for parsing an exp
-         return self._parseExp(self.scanner.getNextToken())
+        t = self.scanner.getNextToken()
+        return self._parseExp(t)
 
     def parseRest(self):
         # TODO: write code for parsing a rest
-        return self._parseRest(self.scanner.getNextToken())
+        t = self.scanner.getNextToken()
+        return self._parseRest(t)
 
     # TODO: Add any additional methods you might need
     def _parseExp(self, t):
@@ -67,7 +69,7 @@ class Parser:
         elif t.getType() == TokenType.STR:
             return StrLit(t.getString())
         elif t.getType() == TokenType.QUOTE:
-            return Cons(Ident("\'"),Cons(self.parseExp(),Nil()))
+            return Cons(Ident("\'"), Cons(self.parseExp(),Nil()))
         elif t.getType() == TokenType.DOT:
             return self.parseExp()
         else:
