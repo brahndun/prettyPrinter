@@ -34,6 +34,9 @@ class Scanner:
         return ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z'
 
     @staticmethod
+    def isPorM(ch)
+        return ch == '+' or ch == '-'
+    @staticmethod
     def isSymbol(ch):
         return ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~'  
     
@@ -57,7 +60,8 @@ class Scanner:
             # input stream is easier.
             ch = self.read()
 
-            # TODO: Skip white space and comments           
+            # TODO: Skip white space and comments   
+            sys.stdout.write('Check for whitespace')        
             while ch !='':
                 if ch == ' ' or ch == '\t' or ch == '\n' or ch == ';' or ch == '\x0c' or ch == '\r':
                     if ch == ';':
@@ -70,6 +74,7 @@ class Scanner:
 
 
             # Return None on EOF
+            sys.stdout.write('Check for Character')
             if ch == "":
                 return 
             # Special characters
@@ -84,6 +89,7 @@ class Scanner:
                 return Token(TokenType.DOT)
 
             # Boolean constants
+            sys.stdout.write('Check for Boolean') 
             if ch == '#':
                 ch = self.read()
 
@@ -100,6 +106,7 @@ class Scanner:
                     return self.getNextToken()
 
             # String constants
+            sys.stdout.write('Check for String') 
             if ch == '"':
                 self.buf = []
                 # TODO: scan a string into the buffer variable buf
@@ -114,6 +121,7 @@ class Scanner:
                 return StrToken(''.join(self.buf))
 
             # Integer constants
+            sys.stdout.write('Check for Int')
             if self.isDigit(ch):
                 i = ord(ch) - ord('0')
                 j = self.peek()
@@ -128,7 +136,8 @@ class Scanner:
 
             # Identifiers
             else:
-                if ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z' or ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~' or ch =='+' or ch == '-':
+                sys.stdout.write('Check for Ident')
+                if self.isInitial(ch) or self.isPorM(ch):
                     self.buf = []
                     if ch >= 'A':
                         if ch <= 'Z':
@@ -138,8 +147,7 @@ class Scanner:
                         return IdentToken(''.join(self.buf))
                     ch.self.peek()
                     while ch != '':
-                        ch = ch >= 'A' and ch <= 'Z' or ch >= 'a' and ch <= 'z' or ch == '!' or ch == '$' or ch == '%' or ch == '&' or ch == '*' or ch == '/' or ch == ':' or ch == '<' or ch == '=' or ch == '>' or ch == '?' or ch == '^' or ch == '_' or ch == '~' or ch =='+' or ch == '-' or ch >= '0' and ch <= '9' or ch == '+' or ch == '-' or ch == '.' or ch == '@' and self.read()
-                        if ch >= 'A':
+                            ch = self.isRest(ch) and self.read()                        if ch >= 'A':
                             if ch <= 'Z':
                                 ch = ch.lower()
                             self.buf.append(ch)
